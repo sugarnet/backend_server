@@ -1,0 +1,1 @@
+module.exports.SEED = '@feanor_@Y_@finwe';
