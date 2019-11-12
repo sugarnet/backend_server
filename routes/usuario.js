@@ -14,7 +14,7 @@ app.get('/', ( req, resp, next ) => {
     var desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Usuario.find({}, 'nombre email img role')
+    Usuario.find({}, 'nombre email img role google')
     .skip(desde)
     .limit(5)
     .exec(
@@ -45,7 +45,7 @@ app.get('/', ( req, resp, next ) => {
 // =====================================================
 // Actualizar usuario
 // =====================================================
-app.put('/:id', mdAuthentication.verifyToken, (req, resp) => {
+app.put('/:id', [mdAuthentication.verifyToken, mdAuthentication.verifyAdminOMismoUsuario], (req, resp) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -95,7 +95,7 @@ app.put('/:id', mdAuthentication.verifyToken, (req, resp) => {
 // =====================================================
 // Crear usuario
 // =====================================================
-app.post('/', mdAuthentication.verifyToken, (req, resp) => {
+app.post('/', (req, resp) => {
     var body = req.body;
 
     var usuario = new Usuario({
@@ -125,9 +125,9 @@ app.post('/', mdAuthentication.verifyToken, (req, resp) => {
 });
 
 // =====================================================
-// Crear usuario
+// Eliminar usuario
 // =====================================================
-app.delete('/:id', mdAuthentication.verifyToken, (req, resp) => {
+app.delete('/:id', [mdAuthentication.verifyToken, mdAuthentication.verifyADMIN], (req, resp) => {
 
     var id = req.params.id;
 
